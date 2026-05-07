@@ -1,4 +1,5 @@
-﻿using BugBox.Models;
+﻿using BugBox.DTOs.Bug;
+using BugBox.Models;
 using BugBox.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,13 +34,13 @@ namespace BugBox.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAllBugs(Bug bug)
+        public async Task<IActionResult> PostAllBugs(CreateBugDto createBugDto)
         {
             try
             {
-                await bugService.AddBug(bug);
+                await bugService.AddBug(createBugDto);
 
-                return Ok(bug);
+                return Ok(createBugDto);
 
             }
             catch (Exception ex)
