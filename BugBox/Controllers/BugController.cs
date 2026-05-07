@@ -30,6 +30,9 @@ namespace BugBox.Controllers
         {
             var records = await bugService.GetBugById(id);
 
+            if (records == null)
+                return NotFound();
+
             return Ok(records);
         }
 
@@ -38,9 +41,9 @@ namespace BugBox.Controllers
         {
             try
             {
-                await bugService.AddBug(createBugDto);
+                var result = await bugService.AddBug(createBugDto);
 
-                return Ok(createBugDto);
+                return Ok(result);
 
             }
             catch (Exception ex)
@@ -50,11 +53,16 @@ namespace BugBox.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutByIdBug(int id,Bug bug)
+        public async Task<IActionResult> PutByIdBug(int id,UpdateBugDto dto)
         {
             try
             {
-                var record = await bugService.EditBug(id, bug);
+                var record = await bugService.EditBug(id, dto);
+
+                if (record == null)
+                {
+                    return NotFound(new { message = "Bug not found" });
+                }
 
                 return Ok(record); 
             }

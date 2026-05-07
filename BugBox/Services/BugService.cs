@@ -80,7 +80,7 @@ namespace BugBox.Services
             return response;
         }
 
-        public async Task<Bug?> EditBug(int id, Bug bug)
+        public async Task<BugResponseDto?> EditBug(int id, UpdateBugDto dto)
         {
             var record = await context.Bugs.FindAsync(id);
 
@@ -89,17 +89,28 @@ namespace BugBox.Services
                 return null;
             }
 
-            record.Title = bug.Title;
-            record.Description = bug.Description;
-            record.Priority = bug.Priority;
-            record.Category = bug.Category;
-            record.Rootcause = bug.Rootcause;
-            record.Status = bug.Status;
-            record.AssignedTo = bug.AssignedTo;
+            record.Title = dto.Title;
+            record.Description = dto.Description;
+            record.Priority = dto.Priority;
+            record.Category = dto.Category;
+            record.Rootcause = dto.Rootcause;
+            record.Status = dto.Status;
+            record.AssignedTo = dto.AssignedTo;
 
             await context.SaveChangesAsync();
 
-            return record;
+            return new BugResponseDto
+            {
+                Id = record.Id,
+                Title = record.Title,
+                Description = record.Description,
+                Priority = record.Priority,
+                Category = record.Category,
+                Rootcause = record.Rootcause,
+                Status = record.Status,
+                AssignedTo = record.AssignedTo,
+                CreatedDate = record.CreatedDate
+            };
         }
 
         public async Task<bool> DeleteBugById(int id)
