@@ -66,7 +66,12 @@ namespace BugBox.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBugById(int id)
         {
-            await bugService.DeleteBugById(id);
+            var deleted = await bugService.DeleteBugById(id);
+
+            if (!deleted)
+            {
+                return NotFound(new { message = "Bug not found" });
+            }
 
             return Ok(new { message = "Bug deleted successfully" });
         }
