@@ -1,4 +1,6 @@
 using BugBox.Models;
+using BugBox.Services;
+using BugBox.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,8 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 builder.Services.AddDbContext<BugBoxContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultconnection")));
+
+builder.Services.AddScoped<IBugService, BugService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
