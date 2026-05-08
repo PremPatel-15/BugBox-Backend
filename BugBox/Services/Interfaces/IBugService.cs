@@ -8,7 +8,7 @@ namespace BugBox.Services.Interfaces
         Task<List<BugResponseDto>> GetAllBugs();
         Task<BugResponseDto?> GetBugById(int id);
         Task<BugResponseDto> AddBug(CreateBugDto dto);
-        Task<BugResponseDto?> EditBug(int id, UpdateBugDto dto);
+        Task<BugResponseDto> EditBug(int id, UpdateBugDto dto);
         Task<bool> DeleteBugById(int id);
     }
 }

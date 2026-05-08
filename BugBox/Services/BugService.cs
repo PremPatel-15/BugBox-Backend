@@ -80,13 +80,13 @@ namespace BugBox.Services
             return response;
         }
 
-        public async Task<BugResponseDto?> EditBug(int id, UpdateBugDto dto)
+        public async Task<BugResponseDto> EditBug(int id, UpdateBugDto dto)
         {
             var record = await context.Bugs.FindAsync(id);
 
             if (record == null)
             {
-                return null;
+                throw new Exception("Log not Found");
             }
 
             record.Title = dto.Title;
